@@ -82,7 +82,7 @@ export default function ModuleSelectionPage() {
         <section className="container py-12">
           <div className="grid gap-12 md:grid-cols-2">
             <div className="space-y-4">
-              <div className="inline-flex items-center justify-center rounded-md bg-primary/10 p-2 text-primary">
+              <div className="inline-flex items-center justify-center rounded-md p-2 text-primary">
                 <Layers className="h-6 w-6" />
               </div>
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl" style={{ color: "#E67700" }}>
@@ -97,7 +97,7 @@ export default function ModuleSelectionPage() {
               </div>
             </div>
             <div className="space-y-4">
-              <div className="inline-flex items-center justify-center rounded-md bg-primary/10 p-2 text-primary">
+              <div className="inline-flex items-center justify-center rounded-m p-2 text-primary">
                 <FileText className="h-6 w-6" />
               </div>
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl" style={{ color: "#E67700" }}>
