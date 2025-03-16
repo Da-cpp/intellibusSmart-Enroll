@@ -30,6 +30,48 @@ const isModuleFull = (status: string) => {
   return current >= total
 }
 
+// New Cell Component to avoid using hooks in non-functional components
+const CellComponent = ({ row, hasTimeClash, selectedModules }) => {
+  const status = row.original.status
+  const isFull = isModuleFull(status)
+
+  const moduleData = row.original
+  const wouldClash = hasTimeClash(moduleData)
+
+  // Determine if this module is already selected
+  const isSelected = selectedModules.some((m) => m.moduleCode === moduleData.moduleCode)
+
+  // Only show clash warning if not already selected
+  const showClashWarning = wouldClash && !isSelected
+
+  const isDisabled = isFull || showClashWarning
+
+  return (
+    <div className="flex items-center">
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        disabled={isDisabled}
+        className={isDisabled ? "cursor-not-allowed opacity-50" : ""}
+      />
+
+      {showClashWarning && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <AlertCircle className="h-4 w-4 ml-2 text-amber-500" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Time clash with another selected module</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+    </div>
+  )
+}
+
 export const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
@@ -41,46 +83,8 @@ export const columns: ColumnDef<Payment>[] = [
       />
     ),
     cell: ({ row }) => {
-      const status = row.original.status
-      const isFull = isModuleFull(status)
-
-      // Use the context to check for time clashes
-      const { hasTimeClash, selectedModules } = useModuleSelection()
-      const module = row.original
-      const wouldClash = hasTimeClash(module)
-
-      // Determine if this module is already selected
-      const isSelected = selectedModules.some((m) => m.moduleCode === module.moduleCode)
-
-      // Only show clash warning if not already selected
-      const showClashWarning = wouldClash && !isSelected
-
-      const isDisabled = isFull || showClashWarning
-
-      return (
-        <div className="flex items-center">
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-            disabled={isDisabled}
-            className={isDisabled ? "cursor-not-allowed opacity-50" : ""}
-          />
-
-          {showClashWarning && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <AlertCircle className="h-4 w-4 ml-2 text-amber-500" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Time clash with another selected module</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
-      )
+      const { hasTimeClash, selectedModules } = useModuleSelection() // Call hook here
+      return <CellComponent row={row} hasTimeClash={hasTimeClash} selectedModules={selectedModules} />
     },
     enableSorting: false,
     enableHiding: false,
@@ -136,7 +140,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const module = row.original
+      const moduleData = row.original
 
       return (
         <DropdownMenu>
@@ -148,7 +152,7 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(module.moduleCode)}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(moduleData.moduleCode)}>
               Copy module code
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -160,4 +164,3 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
 ]
-

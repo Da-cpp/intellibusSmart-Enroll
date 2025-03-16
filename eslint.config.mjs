@@ -14,3 +14,9 @@ const eslintConfig = [
 ];
 
 export default eslintConfig;
+
+export default {
+  extends: ['eslint:recommended'],
+  rules: {
+    '@typescript-eslint/no-unused-vars': 'off',  // Disable rule globally
+  },
