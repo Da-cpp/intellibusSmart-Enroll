@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> fbacbf96b9c3f354a3aaf6b194e2526670e3513d
 import { Payment, columns } from "./columns"
 import { DataTable } from "./data-table"
 
