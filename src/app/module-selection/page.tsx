@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog"
 import { Card, CardContent } from "@/components/ui/card"
 
-// This would normally be fetched from an API
+
 const getData = (): Payment[] => {
   return [
     {
@@ -99,7 +99,7 @@ export default function ModuleSelectionPage() {
   const data = getData()
   const { selectedModules } = useModuleSelection() as {
     selectedModules: { moduleCode: string; module: string; occurence: string; dateTime: string }[]
-  } // Explicit type for selectedModules
+  } 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -111,7 +111,7 @@ export default function ModuleSelectionPage() {
   const handleConfirm = async () => {
     setIsSubmitting(true)
     try {
-      // Save the selected modules to the API
+      
       const response = await fetch("https://run.mocky.io/v3/0426b947-97ee-42cf-a56f-4e6afa0c5332", {
         method: "POST",
         headers: {
@@ -124,15 +124,12 @@ export default function ModuleSelectionPage() {
         throw new Error("Failed to save module selection")
       }
 
-      // After successful API call, navigate to the synopsis page
       const moduleIds = selectedModules.map((m) => m.moduleCode).join(",")
       router.push(`/module-selection/synopsis?modules=${moduleIds}`)
     } catch (error) {
       console.error("Error saving module selection:", error)
-      // Reset submitting state on error
       setIsSubmitting(false)
       setConfirmDialogOpen(false)
-      // You might want to add error handling UI here
     }
   }
 
@@ -197,26 +194,8 @@ export default function ModuleSelectionPage() {
           </div>
         </section>
 
-        {/* Academic Advisor section commented out for later
-        <section className="container py-12">
-          <div className="rounded-lg bg-muted p-8">
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-              <div className="space-y-3">
-                <h2 className="text-2xl font-bold">Need assistance?</h2>
-                <p className="text-muted-foreground">
-                  Our academic advisors are available to help with your module selection.
-                </p>
-              </div>
-              <Button size="lg" className="w-full md:w-auto" style={{ backgroundColor: "#E67700" }}>
-                Contact Advisor
-              </Button>
-            </div>
-          </div>
-        </section>
-        */}
       </main>
 
-      {/* Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
