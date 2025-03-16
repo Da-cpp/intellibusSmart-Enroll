@@ -157,7 +157,7 @@ export default function ModuleSelectionPage() {
               <Label htmlFor="username" className="text-right">
                 Application ID
               </Label>
-              <Input id="username" placeholder="e.g., 2023001234" className="col-span-3" />
+              <Input id="username" placeholder="e.g., 2203948" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="text-right">
