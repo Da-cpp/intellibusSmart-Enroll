@@ -145,7 +145,7 @@ export default function ModuleSelectionPage() {
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Module Table */}
             <div className="rounded-lg border bg-card p-6">
-              <h2 className="text-2xl font-bold mb-6" style={{ color: "#E67700" }}>
+              <h2 className="text-2xl font-bold mb-6" style={{ color: "#FFFFFF" }}>
                 Module Availability
               </h2>
               <DataTable columns={columns} data={data} />
