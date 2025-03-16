@@ -130,37 +130,36 @@ export default function ModuleSelectionPage() {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="username" className="text-right mt-2">
                 Application ID
               </Label>
-              <Input
-                id="username"
-                placeholder="e.g., 2203948"
-                className="col-span-3"
-                value={applicationId}
-                onChange={(e) => setApplicationId(e.target.value)}
-              />
+              <div className="col-span-3 space-y-1">
+                <Input
+                  id="username"
+                  placeholder="e.g., 2203948"
+                  value={applicationId}
+                  onChange={(e) => setApplicationId(e.target.value)}
+                />
+                {errors.applicationId && <p className="text-sm text-red-500">{errors.applicationId}</p>}
+              </div>
             </div>
-            {errors.applicationId && (
-              <div className="col-span-3 col-start-2 text-sm text-red-500 ml-4">{errors.applicationId}</div>
-            )}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
+
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="password" className="text-right mt-2">
                 Password
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="col-span-3"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="col-span-3 space-y-1">
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+              </div>
             </div>
-            {errors.password && (
-              <div className="col-span-3 col-start-2 text-sm text-red-500 ml-4">{errors.password}</div>
-            )}
           </div>
           <DialogFooter>
             <Button
@@ -174,7 +173,7 @@ export default function ModuleSelectionPage() {
                 if (!/^\d{7}$/.test(applicationId)) {
                   setErrors((prev) => ({
                     ...prev,
-                    applicationId: "Application ID must be a 7-digit number",
+                    applicationId: "Invalid Id",
                   }))
                   return
                 }
