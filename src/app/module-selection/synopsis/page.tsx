@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-// This would normally be fetched from an API
 const getModuleData = (moduleCode: string) => {
   const modules = {
     CIT2018: {
@@ -96,7 +95,6 @@ const getModuleData = (moduleCode: string) => {
   return modules[moduleCode as keyof typeof modules] || null
 }
 
-// Format the dateTime string for display
 const formatDateTime = (dateTime: string) => {
   const daysOfWeek: { [key: string]: string } = {
     mon: "Monday",
@@ -110,7 +108,7 @@ const formatDateTime = (dateTime: string) => {
 
   const parts = dateTime.split("-")
   if (parts.length >= 5) {
-    const day = daysOfWeek[parts[0].toLowerCase()] || parts[0] // Convert to full day name
+    const day = daysOfWeek[parts[0].toLowerCase()] || parts[0] 
     return `${day}, ${parts[1]} ${parts[2]} - ${parts[3]} ${parts[4]}`
   }
   return dateTime
@@ -126,7 +124,7 @@ export default function SynopsisPage() {
   useEffect(() => {
     const fetchModules = async () => {
       const modules = await Promise.all(moduleIds.map((id) => getModuleData(id)))
-      setRegisteredModules(modules.filter(Boolean)) // Ensure no `null` values
+      setRegisteredModules(modules.filter(Boolean)) 
     }
   
     if (moduleIds.length > 0) {
@@ -134,17 +132,16 @@ export default function SynopsisPage() {
     }
   }, [moduleIds])
 
-  // Calculate total credit hours (assuming each module is 3 credits)
+//avg credits
   const totalCredits = registeredModules.length * 3
 
-  // Function to generate and download PDF
+
   const handleDownloadPDF = () => {
-    // In a real application, you would use a library like jsPDF and html2canvas
-    // Here we'll simulate the download with a data URL
+
     const studentId = "2023001234"
     const date = new Date().toLocaleDateString()
 
-    // Create a text version of the registration
+
     let content = `UTECH MODULE REGISTRATION RECEIPT\n\n`
     content += `Student ID: ${studentId}\n`
     content += `Registration Date: ${date}\n`
@@ -158,10 +155,10 @@ export default function SynopsisPage() {
       content += `   Occurrence: ${module.occurence}\n\n`
     })
 
-    // Create a Blob with the content
+
     const blob = new Blob([content], { type: "text/plain" })
 
-    // Create a download link and trigger it
+
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
@@ -169,7 +166,7 @@ export default function SynopsisPage() {
     document.body.appendChild(a)
     a.click()
 
-    // Clean up
+  
     setTimeout(() => {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
