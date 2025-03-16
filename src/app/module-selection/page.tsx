@@ -97,7 +97,7 @@ const getData = (): Payment[] => {
 
 export default function ModuleSelectionPage() {
   const data = getData()
-  const { selectedModules } = useModuleSelection()
+  const { selectedModules } = useModuleSelection() as { selectedModules: { moduleCode: string; module: string; occurence: string; dateTime: string }[] } // Explicit type for selectedModules
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
   const router = useRouter()
 
@@ -108,7 +108,7 @@ export default function ModuleSelectionPage() {
   const handleConfirm = () => {
     // In a real app, you would send the registration to the server here
     // Then navigate to the synopsis page
-    const moduleIds = selectedModules.map((m) => m.moduleCode).join(",")
+    const moduleIds = selectedModules.map((m) => m.moduleCode).join(",") // Compute inside the function
     router.push(`/module-selection/synopsis?modules=${moduleIds}`)
   }
 
@@ -245,4 +245,3 @@ export default function ModuleSelectionPage() {
     </div>
   )
 }
-
