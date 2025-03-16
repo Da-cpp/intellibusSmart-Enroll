@@ -1,3 +1,4 @@
+"use client"
 import { useModuleSelection } from "./module-selection-context"
 import { Card, CardContent } from "@/components/ui/card"
 
