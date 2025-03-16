@@ -37,7 +37,7 @@ export function Timetable() {
   // Create a map of modules by day and time slot
   const modulesByDayAndTime = new Map()
 
-  selectedModules.forEach((selectedModule: Payment) => { // Explicitly typing selectedModule as Payment
+  selectedModules.forEach((selectedModule: Payment) => {  // Explicitly typing selectedModule as Payment
     const dateTime = parseDateTime(selectedModule.dateTime)
     if (dateTime) {
       const { day, startHour, startPeriod } = dateTime
@@ -131,7 +131,7 @@ export function Timetable() {
                         : 1
                     }
                   >
-                    {modules.map((selectedModule: Payment, index) => ( // Typing each selectedModule as Payment
+                    {modules.map((selectedModule: Payment, index: number) => (  // Typing 'selectedModule' and 'index'
                       <Card key={index} className="mb-1 bg-primary/10 border-primary/20">
                         <CardContent className="p-2">
                           <div className="text-xs font-bold" style={{ color: "#E67700" }}>
