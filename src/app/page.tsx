@@ -110,8 +110,19 @@ export default function ModuleSelectionPage() {
       </footer>
 
       {/* Login Dialog */}
-      <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+      <Dialog
+        open={loginOpen}
+        onOpenChange={(open) => {
+          setLoginOpen(open)
+          if (!open) {
+            // Reset form when dialog is closed
+            setApplicationId("")
+            setPassword("")
+            setErrors({ applicationId: "", password: "" })
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle style={{ color: "#E67700" }}>Student Login</DialogTitle>
             <DialogDescription>
@@ -231,3 +242,4 @@ function ModuleCard({
     </Card>
   )
 }
+
