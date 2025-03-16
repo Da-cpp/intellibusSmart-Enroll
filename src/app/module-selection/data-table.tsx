@@ -15,9 +15,7 @@ import {
 } from "@tanstack/react-table"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-//import type { Payment } from "./module-selection-context"
 import type { Payment } from "./columns"
-
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -61,12 +59,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   })
 
   // Update selected modules when row selection changes
-React.useEffect(() => {
-  const selectedRows = table.getFilteredSelectedRowModel().rows
-  const modules = selectedRows.map((row) => row.original as Payment)
-  setSelectedModules(modules)
-}, [rowSelection, table, setSelectedModules])
-
+  React.useEffect(() => {
+    const selectedRows = table.getFilteredSelectedRowModel().rows
+    const modules = selectedRows.map((row) => row.original as Payment)
+    setSelectedModules(modules)
+  }, [rowSelection, table, setSelectedModules])
 
   return (
     <div>
@@ -121,9 +118,9 @@ React.useEffect(() => {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => {
                 // Determine row color based on availability
-                const status = (row.original?.status as string) || ""
+                const status = (row.original as Payment)?.status ?? ""
                 const [current, total] = status.split("/").map(Number)
-                const percentage = (current / total) * 100
+                const percentage = total ? (current / total) * 100 : 0
 
                 let rowClassName = ""
 
@@ -138,7 +135,6 @@ React.useEffect(() => {
                 } else {
                   rowClassName = "text-green-500"
                 }
-                
 
                 if (row.getIsSelected()) {
                   rowClassName += " bg-primary/5"
@@ -184,4 +180,3 @@ React.useEffect(() => {
     </div>
   )
 }
-
