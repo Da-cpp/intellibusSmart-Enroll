@@ -1,4 +1,5 @@
 
+
 /*import { Button } from "@/components/ui/button";
 import { Container } from "lucide-react";
 
@@ -26,6 +27,7 @@ export default function Home() {
 
 /* <h1 style={{ color: "#E67700"}}>UTECH MODULE ASSIGNMENT SYSTEM(UT-MAS) </h1>*/
 "use client"
+
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
@@ -57,7 +59,14 @@ export default function ModuleSelectionPage() {
             <span className="text-xl font-bold">UT-MAS</span>
           </div>
           <div className="hidden md:flex md:gap-4">
-            {/* Add links if needed */}
+            {/*
+            <Link href="#" className="text-sm font-medium">
+              Options
+            </Link>
+            <Link href="#" className="text-sm font-medium">
+              Help
+            </Link>
+            */}
           </div>
         </div>
       </header>
@@ -103,7 +112,7 @@ export default function ModuleSelectionPage() {
                 If you need assistance with selecting your modules, understanding course requirements, or resolving any
                 registration issues, our administrative office is here to help.
                 <br />
-                <br />📍 Visit Us: <b>Basement Floor, Faculty of Engineering</b>
+                <br />📍 Visit Us: <b>Basement Floor, Factuly of Engineering</b>
                 <br />📞 Call: <b>(876) 489-1436</b>
                 <br />📧 Email: <b>AdminOffice@utech.edu.jm</b>
                 <br />
@@ -114,7 +123,30 @@ export default function ModuleSelectionPage() {
             </div>
           </div>
         </section>
+
       </main>
+      <footer className="border-t py-6 md:py-8">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-2">
+            <Layers className="h-5 w-5" />
+            <span className="font-semibold">UT-MAS</span>
+          </div>
+          <p className="text-center text-sm text-muted-foreground md:text-left">
+            <em>Magna per artem gesta.</em>
+          </p>
+          <div className="flex gap-4">
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Terms
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Privacy
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Contact
+            </Link>
+          </div>
+        </div>
+      </footer>
 
       {/* Login Dialog */}
       <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
@@ -144,6 +176,7 @@ export default function ModuleSelectionPage() {
               type="submit"
               style={{ backgroundColor: "#E67700" }}
               onClick={() => {
+                // In a real app, you would validate credentials here before redirecting
                 router.push("/module-selection")
                 setLoginOpen(false)
               }}
@@ -154,6 +187,47 @@ export default function ModuleSelectionPage() {
         </DialogContent>
       </Dialog>
     </div>
+  )
+}
+
+function ModuleCard({
+  title,
+  description,
+  level,
+  duration,
+  icon,
+}: {
+  title: string
+  description: string
+  level: string
+  duration: string
+  icon: React.ReactNode
+}) {
+  return (
+    <Card className="overflow-hidden transition-all hover:shadow-md">
+      <CardHeader className="pb-3">
+        <div className="flex items-center gap-2">
+          <div className="rounded-md bg-primary/10 p-2 text-primary">{icon}</div>
+          <CardTitle className="text-lg">{title}</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent className="pb-3">
+        <CardDescription className="line-clamp-2 min-h-[40px]">{description}</CardDescription>
+      </CardContent>
+      <CardFooter className="flex items-center justify-between border-t pt-3">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <Book className="h-4 w-4" />
+          <span>{level}</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <FileText className="h-4 w-4" />
+          <span>{duration}</span>
+        </div>
+        <Button variant="ghost" size="sm" className="ml-auto">
+          View Details
+        </Button>
+      </CardFooter>
+    </Card>
   )
 }
 
