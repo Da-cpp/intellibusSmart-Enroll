@@ -137,9 +137,6 @@ export default function ModuleSelectionPage() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl" style={{ color: "#E67700" }}>
                 Module Selection
               </h1>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl">
-                Select your modules for the upcoming semester.
-              </p>
             </div>
           </div>
         </section>
