@@ -1,4 +1,3 @@
-"use client"
 import { useModuleSelection } from "./module-selection-context"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -36,8 +35,8 @@ export function Timetable() {
   // Create a map of modules by day and time slot
   const modulesByDayAndTime = new Map()
 
-  selectedModules.forEach((module) => {
-    const dateTime = parseDateTime(module.dateTime)
+  selectedModules.forEach((selectedModule) => {
+    const dateTime = parseDateTime(selectedModule.dateTime)
     if (dateTime) {
       const { day, startHour, startPeriod } = dateTime
       const timeSlot = `${startHour} ${startPeriod}`
@@ -46,7 +45,7 @@ export function Timetable() {
       if (!modulesByDayAndTime.has(key)) {
         modulesByDayAndTime.set(key, [])
       }
-      modulesByDayAndTime.get(key).push(module)
+      modulesByDayAndTime.get(key).push(selectedModule)
     }
   })
 
@@ -66,8 +65,8 @@ export function Timetable() {
       const prevTimeSlot = timeSlots[i]
       const prevModules = getModuleForCell(day, prevTimeSlot)
 
-      for (const module of prevModules) {
-        const dateTime = parseDateTime(module.dateTime)
+      for (const selectedModule of prevModules) {
+        const dateTime = parseDateTime(selectedModule.dateTime)
         if (dateTime) {
           const rowSpan = calculateRowSpan(
             dateTime.startHour,
@@ -130,14 +129,14 @@ export function Timetable() {
                         : 1
                     }
                   >
-                    {modules.map((module, index) => (
+                    {modules.map((selectedModule, index) => (
                       <Card key={index} className="mb-1 bg-primary/10 border-primary/20">
                         <CardContent className="p-2">
                           <div className="text-xs font-bold" style={{ color: "#E67700" }}>
-                            {module.moduleCode}
+                            {selectedModule.moduleCode}
                           </div>
-                          <div className="text-xs truncate">{module.module}</div>
-                          <div className="text-xs text-muted-foreground">{module.occurence}</div>
+                          <div className="text-xs truncate">{selectedModule.module}</div>
+                          <div className="text-xs text-muted-foreground">{selectedModule.occurence}</div>
                         </CardContent>
                       </Card>
                     ))}
@@ -157,4 +156,3 @@ export function Timetable() {
     </div>
   )
 }
-
