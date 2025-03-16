@@ -83,7 +83,7 @@ export default function ModuleSelectionPage() {
                 <Layers className="h-6 w-6" />
               </div>
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl" style={{ color: "#E67700" }}>
-                Log In
+                Login
               </h2>
               <p className="text-muted-foreground">
                 Enrolled students are to use UTECH issued Application ID as their username and their birthday
