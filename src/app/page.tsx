@@ -1,31 +1,3 @@
-
-
-/*import { Button } from "@/components/ui/button";
-import { Container } from "lucide-react";
-
-export default function Home() {
-  return (
-    <main >
-      
-      <div className="h-screen flex flex-col gap-2 justify-center items-center">
-        <Button>Default</Button>
-        <Button size="sm">small</Button>
-        <Button size="lg">large</Button>
-        <Button size="icon">icon</Button>
-        <Button variant="destructive">Cancel</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="outline">outline</Button>
-        <Button variant="secondary">2nd</Button>
-        <Button variant="ghost" size="icon" className="rounded-full">🚀</Button>
-      </div>
-    </main>
-    
-  );
-}
-
-*/
-
-/* <h1 style={{ color: "#E67700"}}>UTECH MODULE ASSIGNMENT SYSTEM(UT-MAS) </h1>*/
 "use client"
 
 import type React from "react"
@@ -48,6 +20,9 @@ import { useRouter } from "next/navigation"
 
 export default function ModuleSelectionPage() {
   const [loginOpen, setLoginOpen] = useState(false)
+  const [applicationId, setApplicationId] = useState("")
+  const [password, setPassword] = useState("")
+  const [errors, setErrors] = useState({ applicationId: "", password: "" })
   const router = useRouter()
 
   return (
@@ -56,14 +31,9 @@ export default function ModuleSelectionPage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-3">
             <Layers className="h-6 w-6 text-white hover:text-yellow-400 transition-colors duration-200 ease-in-out" />
-            <span className="text-2xl font-extrabold text-white tracking-wide">
-              UT-MAS
-            </span>
+            <span className="text-2xl font-extrabold text-white tracking-wide">UT-MAS</span>
           </div>
         </div>
-
-          
-           
       </header>
       <main className="flex-1">
         <section className="container py-8 md:py-12">
@@ -115,7 +85,6 @@ export default function ModuleSelectionPage() {
             </div>
           </div>
         </section>
-
       </main>
       <footer className="border-t py-6 md:py-8">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -154,21 +123,61 @@ export default function ModuleSelectionPage() {
               <Label htmlFor="username" className="text-right">
                 Application ID
               </Label>
-              <Input id="username" placeholder="e.g., 2203948" className="col-span-3" />
+              <Input
+                id="username"
+                placeholder="e.g., 2203948"
+                className="col-span-3"
+                value={applicationId}
+                onChange={(e) => setApplicationId(e.target.value)}
+              />
             </div>
+            {errors.applicationId && (
+              <div className="col-span-3 col-start-2 text-sm text-red-500 ml-4">{errors.applicationId}</div>
+            )}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="text-right">
                 Password
               </Label>
-              <Input id="password" type="password" placeholder="dd/mm/yyyy" className="col-span-3" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="col-span-3"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
+            {errors.password && (
+              <div className="col-span-3 col-start-2 text-sm text-red-500 ml-4">{errors.password}</div>
+            )}
           </div>
           <DialogFooter>
             <Button
               type="submit"
               style={{ backgroundColor: "#E67700" }}
               onClick={() => {
-                // In a real app, you would validate credentials here before redirecting
+                // Reset errors
+                setErrors({ applicationId: "", password: "" })
+
+                // Validate application ID (must be 7 digits)
+                if (!/^\d{7}$/.test(applicationId)) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    applicationId: "Application ID must be a 7-digit number",
+                  }))
+                  return
+                }
+
+                // Validate password (must be 'intellibus')
+                if (password !== "intellibus") {
+                  setErrors((prev) => ({
+                    ...prev,
+                    password: "Invalid password",
+                  }))
+                  return
+                }
+
+                // If validation passes, proceed to next page
                 router.push("/module-selection")
                 setLoginOpen(false)
               }}
@@ -222,4 +231,3 @@ function ModuleCard({
     </Card>
   )
 }
-
