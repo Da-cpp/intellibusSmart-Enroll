@@ -5,10 +5,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Layers, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { type Payment, columns } from "./columns"
-import { DataTable } from "./data-table"
-import { Timetable } from "./timetable"
-import { useModuleSelection } from "./module-selection-context"
+import { type Payment, columns } from "../columns"
+import { DataTable } from "../data-table"
+import { Timetable } from "../timetable"
+import { useModuleSelection } from "../module-selection-context"
 import {
   Dialog,
   DialogContent,
@@ -97,19 +97,58 @@ const getData = (): Payment[] => {
 
 export default function ModuleSelectionPage() {
   const data = getData()
-  const { selectedModules } = useModuleSelection() as { selectedModules: { moduleCode: string; module: string; occurence: string; dateTime: string }[] } // Explicit type for selectedModules
+  const { selectedModules } = useModuleSelection() as {
+    selectedModules: { moduleCode: string; module: string; occurence: string; dateTime: string }[]
+  } // Explicit type for selectedModules
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
   const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleRegister = () => {
     setConfirmDialogOpen(true)
   }
 
-  const handleConfirm = () => {
-    // In a real app, you would send the registration to the server here
-    // Then navigate to the synopsis page
-    const moduleIds = selectedModules.map((m) => m.moduleCode).join(",") // Compute inside the function
-    router.push(`/module-selection/synopsis?modules=${moduleIds}`)
+  const handleConfirm = async () => {
+    try {
+      setIsSubmitting(true)
+
+      // Prepare the data to send to the API
+      const registrationData = {
+        studentId: "student123", // You might want to get this from authentication
+        registrationDate: new Date().toISOString(),
+        modules: selectedModules.map((module) => ({
+          moduleCode: module.moduleCode,
+          moduleName: module.module,
+          occurrence: module.occurence,
+          dateTime: module.dateTime,
+        })),
+      }
+
+      // Send the data to the API
+      const response = await fetch("https://run.mocky.io/v3/0426b947-97ee-42cf-a56f-4e6afa0c5332", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registrationData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to register modules")
+      }
+
+      // Close the dialog
+      setConfirmDialogOpen(false)
+
+      // Navigate to the synopsis page
+      const moduleIds = selectedModules.map((m) => m.moduleCode).join(",")
+      router.push(`/module-selection/synopsis?modules=${moduleIds}`)
+    } catch (error) {
+      console.error("Error registering modules:", error)
+      // You might want to show an error message to the user here
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -232,9 +271,9 @@ export default function ModuleSelectionPage() {
             <Button
               style={{ backgroundColor: "#E67700" }}
               onClick={handleConfirm}
-              disabled={selectedModules.length === 0}
+              disabled={selectedModules.length === 0 || isSubmitting}
             >
-              Confirm Registration
+              {isSubmitting ? "Submitting..." : "Confirm Registration"}
             </Button>
           </DialogFooter>
         </DialogContent>
