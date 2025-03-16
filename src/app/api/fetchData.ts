@@ -11,8 +11,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const data = await response.json();
     res.status(200).json(data); // Send data to the frontend
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      // TypeScript now knows that `error` is an instance of Error
+      res.status(500).json({ error: error.message });
+    } else {
+      // Fallback in case the error is not an instance of `Error`
+      res.status(500).json({ error: "An unknown error occurred" });
+    }
   }
 }
 
