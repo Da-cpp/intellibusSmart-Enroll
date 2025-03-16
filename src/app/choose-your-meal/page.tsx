@@ -1,5 +1,7 @@
 // app/choose-your-meal/page.tsx
 
+"use client"; // Add this line to mark the component as a client component
+
 import { useEffect, useState } from "react";
 
 // Define the data type based on the API response
