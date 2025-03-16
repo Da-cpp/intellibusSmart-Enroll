@@ -57,7 +57,7 @@ export default function ModuleSelectionPage() {
               </h2>
               <p className="text-muted-foreground">
                 Enrolled students are to use UTECH issued Application ID as their username and their birthday
-                (dd/mm/yyyy).
+                (ddmmyyyy).
               </p>
               <div className="pt-4">
                 <Button onClick={() => setLoginOpen(true)}>Log In</Button>
@@ -179,7 +179,7 @@ export default function ModuleSelectionPage() {
                 }
 
                 // Validate password (must be 'intellibus')
-                if (password !== "intellibus") {
+                if (password !== "201005") {
                   setErrors((prev) => ({
                     ...prev,
                     password: "Invalid password",
