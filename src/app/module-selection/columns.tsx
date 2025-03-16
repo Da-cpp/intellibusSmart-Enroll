@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useModuleSelection } from "./module-selection-context"
+import { Row } from "@tanstack/react-table" // Import Row from react-table to correctly type row
 
 export type Payment = {
   moduleCode: string
@@ -31,7 +32,15 @@ const isModuleFull = (status: string) => {
 }
 
 // New Cell Component to avoid using hooks in non-functional components
-const CellComponent = ({ row, hasTimeClash, selectedModules }) => {
+const CellComponent = ({
+  row,
+  hasTimeClash,
+  selectedModules,
+}: {
+  row: Row<Payment> // Define row type using Row<Payment>
+  hasTimeClash: (moduleData: Payment) => boolean
+  selectedModules: Payment[]
+}) => {
   const status = row.original.status
   const isFull = isModuleFull(status)
 
