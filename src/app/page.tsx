@@ -72,9 +72,6 @@ export default function ModuleSelectionPage() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl" style={{ color: "#E67700" }}>
                 UTECH MODULE ASSIGNMENT SYSTEM
               </h1>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl">
-                <em>Choose from our wide range of modules to customize your learning experience.</em>
-              </p>
             </div>
           </div>
         </section>
@@ -127,7 +124,7 @@ export default function ModuleSelectionPage() {
             <span className="font-semibold">UT-MAS</span>
           </div>
           <p className="text-center text-sm text-muted-foreground md:text-left">
-            <em>Magna per artem gesta.</em>
+            " <em>Magna per artem gesta.</em> "
           </p>
           <div className="flex gap-4">
             <Link href="#" className="text-sm text-muted-foreground hover:underline">
