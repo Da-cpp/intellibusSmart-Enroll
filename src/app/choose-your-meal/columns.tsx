@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
+import { Row } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 
@@ -46,7 +47,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
+    cell: ({ row }: { row: Row<Payment> }) => {
       const amount = parseFloat(row.getValue("amount"))
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
