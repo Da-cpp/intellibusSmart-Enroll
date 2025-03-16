@@ -1,16 +1,14 @@
 "use client"
 import { useModuleSelection } from "./module-selection-context"
 import { Card, CardContent } from "@/components/ui/card"
-import type { Payment } from "./columns"  // Assuming this is the correct import for Payment type
+import type { Payment } from "./columns"  
 
 export function Timetable() {
   const { selectedModules } = useModuleSelection()
 
-  // Define days and time slots
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
   const timeSlots = ["8 am", "9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm"]
 
-  // Parse the dateTime string to get day, start time, and end time
   const parseDateTime = (dateTime: string) => {
     const parts = dateTime.split("-")
     if (parts.length >= 5) {
@@ -25,7 +23,6 @@ export function Timetable() {
     return null
   }
 
-  // Calculate the row span based on start and end times
   const calculateRowSpan = (startHour: number, startPeriod: string, endHour: number, endPeriod: string) => {
     const startIndex = timeSlots.findIndex((slot) => slot === `${startHour} ${startPeriod}`)
     const endIndex = timeSlots.findIndex((slot) => slot === `${endHour} ${endPeriod}`)
@@ -34,10 +31,9 @@ export function Timetable() {
     return endIndex - startIndex + 1
   }
 
-  // Create a map of modules by day and time slot
   const modulesByDayAndTime = new Map()
 
-  selectedModules.forEach((selectedModule: Payment) => {  // Explicitly typing selectedModule as Payment
+  selectedModules.forEach((selectedModule: Payment) => {  
     const dateTime = parseDateTime(selectedModule.dateTime)
     if (dateTime) {
       const { day, startHour, startPeriod } = dateTime
@@ -51,18 +47,15 @@ export function Timetable() {
     }
   })
 
-  // Check if a cell has a module
   const getModuleForCell = (day: string, timeSlot: string) => {
     const key = `${day}-${timeSlot}`
     return modulesByDayAndTime.get(key) || []
   }
 
-  // Check if a cell should be rendered (to handle rowspan)
   const shouldRenderCell = (day: string, timeSlot: string) => {
     const timeIndex = timeSlots.indexOf(timeSlot)
-    if (timeIndex === 0) return true // Always render the first row
+    if (timeIndex === 0) return true 
 
-    // Check if any previous time slots have a module that spans to this slot
     for (let i = 0; i < timeIndex; i++) {
       const prevTimeSlot = timeSlots[i]
       const prevModules = getModuleForCell(day, prevTimeSlot)
@@ -109,7 +102,7 @@ export function Timetable() {
                 const modules = getModuleForCell(day, timeSlot)
 
                 if (!shouldRenderCell(day, timeSlot)) {
-                  return null // Skip rendering this cell due to rowspan
+                  return null 
                 }
 
                 if (modules.length === 0) {
@@ -118,7 +111,7 @@ export function Timetable() {
 
                 return (
                   <td
-                    key={`${day}-${timeSlot}`}
+                    key={`${day}-${timeSlot}`} // remember to check this
                     className="border p-1"
                     rowSpan={
                       modules.length > 0
@@ -131,7 +124,7 @@ export function Timetable() {
                         : 1
                     }
                   >
-                    {modules.map((selectedModule: Payment, index: number) => (  // Typing 'selectedModule' and 'index'
+                    {modules.map((selectedModule: Payment, index: number) => (  
                       <Card key={index} className="mb-1 bg-primary/10 border-primary/20">
                         <CardContent className="p-2">
                           <div className="text-xs font-bold" style={{ color: "#E67700" }}>
