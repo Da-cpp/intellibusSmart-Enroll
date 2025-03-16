@@ -5,10 +5,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Layers, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { type Payment, columns } from "../columns"
-import { DataTable } from "../data-table"
-import { Timetable } from "../timetable"
-import { useModuleSelection } from "../module-selection-context"
+import { type Payment, columns } from "./columns"
+import { DataTable } from "./data-table"
+import { Timetable } from "./timetable"
+import { useModuleSelection } from "./module-selection-context"
 import {
   Dialog,
   DialogContent,
