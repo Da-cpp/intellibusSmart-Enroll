@@ -53,12 +53,19 @@ export default function ModuleSelectionPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-40 border-b bg-background">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <Layers className="h-6 w-6" />
-            <span className="text-xl font-bold">UT-MAS</span>
+        <div className="container flex h-16 items-center justify-between py-4 px-6 bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg rounded-lg">
+            <div className="flex items-center gap-3">
+              <!-- Add a soft glow effect to the icon -->
+              <Layers className="h-6 w-6 text-white hover:text-yellow-400 transition-colors duration-200 ease-in-out" />
+              
+              <!-- Make the text stand out with better font styling -->
+              <span className="text-2xl font-extrabold text-white tracking-wide">
+                UT-MAS
+              </span>
+            </div>
+          
+            <!-- Add a little margin to the right side of the container -->
           </div>
-          <div className="hidden md:flex md:gap-4">
             {/*
             <Link href="#" className="text-sm font-medium">
               Options
