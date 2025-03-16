@@ -15,7 +15,6 @@ const ModuleSelectionContext = createContext<ModuleSelectionContextType>({
   hasTimeClash: () => false,
 })
 
-// Helper function to parse dateTime string
 const parseDateTime = (dateTime: string) => {
   const parts = dateTime.split("-")
   if (parts.length >= 5) {
@@ -30,7 +29,7 @@ const parseDateTime = (dateTime: string) => {
   return null
 }
 
-// Helper function to check if two time ranges overlap
+
 const doTimesOverlap = (
   day1: string,
   start1: number,
@@ -45,7 +44,7 @@ const doTimesOverlap = (
 ) => {
   if (day1 !== day2) return false
 
-  // Convert to 24-hour format for easier comparison
+
   const convertTo24Hour = (hour: number, period: string) => {
     if (period.toLowerCase() === "am" && hour === 12) return 0
     if (period.toLowerCase() === "pm" && hour !== 12) return hour + 12
@@ -57,7 +56,7 @@ const doTimesOverlap = (
   const start2In24 = convertTo24Hour(start2, startPeriod2)
   const end2In24 = convertTo24Hour(end2, endPeriod2)
 
-  // Check for overlap
+  // checking for overlap
   return (
     (start1In24 < end2In24 && end1In24 > start2In24) ||
     (start2In24 < end1In24 && end2In24 > start1In24) ||
@@ -68,13 +67,12 @@ const doTimesOverlap = (
 export function ModuleSelectionProvider({ children }: { children: ReactNode }) {
   const [selectedModules, setSelectedModules] = useState<Payment[]>([])
 
-  // Function to check if a new module would clash with already selected modules
+
   const hasTimeClash = (newModule: Payment) => {
     const newDateTime = parseDateTime(newModule.dateTime)
     if (!newDateTime) return false
 
     return selectedModules.some((module) => {
-      // Skip checking against itself
       if (module.moduleCode === newModule.moduleCode) return false
 
       const moduleDateTime = parseDateTime(module.dateTime)
