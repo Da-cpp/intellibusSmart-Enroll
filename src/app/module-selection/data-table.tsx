@@ -15,7 +15,9 @@ import {
 } from "@tanstack/react-table"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import type { Payment } from "./module-selection-context"
+//import type { Payment } from "./module-selection-context"
+import type { Payment } from "./columns"
+
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -61,7 +63,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   // Update selected modules when row selection changes
 React.useEffect(() => {
   const selectedRows = table.getFilteredSelectedRowModel().rows
-  const modules = selectedRows.map((row) => row.original as Payment) 
+  const modules = selectedRows.map((row) => row.original as Payment)
   setSelectedModules(modules)
 }, [rowSelection, table, setSelectedModules])
 
