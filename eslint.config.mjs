@@ -14,3 +14,12 @@ const eslintConfig = [
 ];
 
 export default eslintConfig;
+
+export default {
+  // Extends from ESLint's recommended rules
+  extends: ['eslint:recommended'],
+  rules: {
+    // Disable the no-unused-vars rule globally
+    'no-unused-vars': 'off', // Or 'warn' to just warn instead of error
+  },
+}
