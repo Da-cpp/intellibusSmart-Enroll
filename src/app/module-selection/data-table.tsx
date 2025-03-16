@@ -58,11 +58,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   })
 
   // Update selected modules when row selection changes
-  React.useEffect(() => {
-    const selectedRows = table.getFilteredSelectedRowModel().rows
-    const modules = selectedRows.map((row) => row.original)
-    setSelectedModules(modules)
-  }, [rowSelection, table, setSelectedModules])
+React.useEffect(() => {
+  const selectedRows = table.getFilteredSelectedRowModel().rows
+  const modules = selectedRows.map((row) => row.original as Payment) 
+  setSelectedModules(modules)
+}, [rowSelection, table, setSelectedModules])
+
 
   return (
     <div>
